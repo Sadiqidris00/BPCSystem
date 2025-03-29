@@ -2,7 +2,7 @@ public class TherapySession {
     private Specialist specialist;
     private String serviceType;
     private String sessionTime;
-    private Member member; 
+    private Member member;
     private boolean completed;
 
     public TherapySession(Specialist specialist, String serviceType, String sessionTime) {
@@ -13,49 +13,25 @@ public class TherapySession {
         this.completed = false;
     }
 
-    public boolean hasReservation() {
-        return member != null;
+    public boolean hasReservation() { return member != null; }
+    public void assignMember(Member member) { this.member = member; }
+    public void recordCompletion() { this.completed = true; }
+    public String getServiceType() { return serviceType; }
+    public String getSessionTime() { return sessionTime; }
+     public void releaseReservation() {
+        this.member = null;
+    }
+    public Member getMember() {
+        return member;
     }
 
     public boolean isCompleted() {
         return completed;
     }
-
-    public void assignMember(Member member) {
-        if (this.member == null) {
-            this.member = member;
-        }
-    }
-
-    public void releaseReservation() {
-        this.member = null;
-        this.completed = false;
-    }
-
-    public void recordCompletion() {
-        if (member != null) {
-            this.completed = true;
-        } else {
-            System.out.println("No member assigned to this session.");
-        }
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public String getSessionTime() {
-        return sessionTime;
-    }
-
     @Override
     public String toString() {
-        return "Session Time: " + sessionTime + " | Member: " +
-               (member != null ? member.getFullName() : "Open") +
-               " | Completed: " + (completed ? "Yes" : "No");
+        return "Time: " + sessionTime + " | Service: " + serviceType + " | Member: " +
+                (member != null ? member.getFullName() : "None") + " | Status: " +
+                (hasReservation() ? (completed ? "Completed" : "Reserved") : "Available");
     }
 }
