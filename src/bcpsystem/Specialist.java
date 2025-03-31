@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Specialist {
     private String specialistName;
     private String focusArea;
@@ -11,8 +12,16 @@ public class Specialist {
         this.focusArea = focusArea;
     }
 
-    public String getSpecialistName() { return specialistName; }
-    public String getFocusArea() { return focusArea; }
-    public List<TherapySession> getSessionList() { return sessionList; }
-    public void scheduleNewSession(TherapySession session) { sessionList.add(session); }
+    public String getSpecialistName() { 
+        return specialistName; 
+    }
+    public String getFocusArea() { 
+        return focusArea; 
+    }
+    public List<TherapySession> getSessionList() { 
+        return sessionList; 
+    }
+    public void scheduleNewSession(TherapySession session) { 
+        sessionList.add(session); 
+    }
 }
