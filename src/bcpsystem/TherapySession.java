@@ -1,4 +1,9 @@
 public class TherapySession {
+    // Manages the appointments sessions functionalities
+    // Book
+    // Cancel
+    // Complete etc
+    
     private Specialist specialist;
     private String serviceType;
     private String sessionTime;
@@ -13,11 +18,21 @@ public class TherapySession {
         this.completed = false;
     }
 
-    public boolean hasReservation() { return member != null; }
-    public void assignMember(Member member) { this.member = member; }
-    public void recordCompletion() { this.completed = true; }
-    public String getServiceType() { return serviceType; }
-    public String getSessionTime() { return sessionTime; }
+    public boolean hasReservation() { 
+        return member != null; 
+    }
+    public void assignMember(Member member) { 
+        this.member = member; 
+    }
+    public void recordCompletion() { 
+        this.completed = true; 
+    }
+    public String getServiceType() { 
+        return serviceType; 
+    }
+    public String getSessionTime() { 
+        return sessionTime; 
+    }
      public void releaseReservation() {
         this.member = null;
     }
