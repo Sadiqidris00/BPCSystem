@@ -4,6 +4,7 @@ public class TherapySession {
     // Cancel
     // Complete etc
     
+    
     private Specialist specialist;
     private String serviceType;
     private String sessionTime;
@@ -49,4 +50,5 @@ public class TherapySession {
                 (member != null ? member.getFullName() : "None") + " | Status: " +
                 (hasReservation() ? (completed ? "Completed" : "Reserved") : "Available");
     }
+    
 }
