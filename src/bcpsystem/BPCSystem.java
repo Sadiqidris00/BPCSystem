@@ -46,4 +46,52 @@ public class BPCSystem {
         specialists.get(5).scheduleNewSession(new TherapySession(specialists.get(5), "Soft Tissue Mobilization", "Saturday 10 AM"));
         specialists.get(6).scheduleNewSession(new TherapySession(specialists.get(6), "Sports Massage", "Monday 11 AM"));
     }
+    
+    
+    //Gui Setupp
+    public void showGUI() {
+        frame = new JFrame("BPC System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1200, 800);
+
+        // Button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton listSpecialistsBtn = new JButton("List Specialists");
+        JButton scheduleSessionBtn = new JButton("Schedule Session");
+        JButton markAttendedBtn = new JButton("Mark Session as Attended"); // New button
+        JButton showAllSessionsBtn = new JButton("Show All Sessions");
+        JButton cancelSessionBtn = new JButton("Cancel Session");
+        JButton searchByFocusBtn = new JButton("Search by Focus Area");
+        JButton exitBtn = new JButton("Exit");
+
+        buttonPanel.add(listSpecialistsBtn);
+        buttonPanel.add(scheduleSessionBtn);
+        buttonPanel.add(markAttendedBtn);
+        buttonPanel.add(showAllSessionsBtn);
+        buttonPanel.add(cancelSessionBtn);
+        buttonPanel.add(searchByFocusBtn);
+        buttonPanel.add(exitBtn);
+
+        // Output area
+        outputArea = new JTextArea(20, 70);
+        outputArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+
+        // Layout
+        frame.setLayout(new BorderLayout());
+        frame.add(buttonPanel, BorderLayout.NORTH);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // Action listeners
+        listSpecialistsBtn.addActionListener(e -> listSpecialists());
+        scheduleSessionBtn.addActionListener(e -> scheduleSession());
+        markAttendedBtn.addActionListener(e -> markSessionAsAttended());
+        showAllSessionsBtn.addActionListener(e -> showAllSessions());
+        cancelSessionBtn.addActionListener(e -> cancelSession());
+        searchByFocusBtn.addActionListener(e -> findByFocusArea());
+        exitBtn.addActionListener(e -> System.exit(0));
+
+        frame.setVisible(true);
+    }
+
 }
