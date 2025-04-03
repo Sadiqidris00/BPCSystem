@@ -93,5 +93,57 @@ public class BPCSystem {
 
         frame.setVisible(true);
     }
+    //List all specialists
+    private void listSpecialists() {
+        outputArea.append("\n--- Available Specialists ---\n");
+        for (Specialist s : specialists) {
+            outputArea.append("- " + s.getSpecialistName() + " (" + s.getFocusArea() + ")\n");
+        }
+    }
+
+    //Schedule session
+    private void scheduleSession() {
+        String memberIdStr = JOptionPane.showInputDialog(frame, "Enter Member ID:");
+        if (memberIdStr == null) return;
+        try {
+            int memberId = Integer.parseInt(memberIdStr);
+            Member member = locateMemberById(memberId);
+            if (member == null) {
+                JOptionPane.showMessageDialog(frame, "Member not found.");
+                return;
+            }
+
+            String specialistName = JOptionPane.showInputDialog(frame, "Enter Specialist Name:");
+            if (specialistName == null) return;
+            Specialist specialist = locateSpecialistByName(specialistName);
+            if (specialist == null) {
+                JOptionPane.showMessageDialog(frame, "Specialist not found.");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder("Available Sessions:\n");
+            for (TherapySession session : specialist.getSessionList()) {
+                if (!session.hasReservation()) {
+                    sb.append(session.getSessionTime()).append("\n");
+                }
+            }
+            String sessionTime = JOptionPane.showInputDialog(frame, sb.toString() + "\nEnter Session Time to Reserve:");
+            if (sessionTime == null) return;
+
+            for (TherapySession session : specialist.getSessionList()) {
+                if (session.getSessionTime().equalsIgnoreCase(sessionTime) && !session.hasReservation()) {
+                    session.assignMember(member);
+                    member.reserveSession(session);
+                    JOptionPane.showMessageDialog(frame, "Session reserved successfully!");
+                    outputArea.append("Session reserved for " + member.getFullName() + " at " + sessionTime + "\n");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(frame, "No available session found.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid member ID.");
+        }
+    }
+
 
 }
