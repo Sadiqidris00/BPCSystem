@@ -144,6 +144,45 @@ public class BPCSystem {
             JOptionPane.showMessageDialog(frame, "Invalid member ID.");
         }
     }
+    
+    // Mark a session as attended
+    private void markSessionAsAttended() {
+        String memberIdStr = JOptionPane.showInputDialog(frame, "Enter Member ID:");
+        if (memberIdStr == null) return;
+        try {
+            int memberId = Integer.parseInt(memberIdStr);
+            Member member = locateMemberById(memberId);
+            if (member == null) {
+                JOptionPane.showMessageDialog(frame, "Member not found.");
+                return;
+            }
+
+            if (member.getReservedSessions().isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "No sessions scheduled for this member.");
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder("Your Scheduled Sessions:\n");
+            for (TherapySession session : member.getReservedSessions()) {
+                sb.append(session.getSessionTime()).append("\n");
+            }
+            String sessionTime = JOptionPane.showInputDialog(frame, sb.toString() + "\nEnter Session Time to Mark as Attended:");
+            if (sessionTime == null) return;
+
+            for (TherapySession session : member.getReservedSessions()) {
+                if (session.getSessionTime().trim().equalsIgnoreCase(sessionTime.trim())) {
+                    session.recordCompletion();
+                    JOptionPane.showMessageDialog(frame, "Session marked as attended successfully!");
+                    outputArea.append("Session marked as attended for " + member.getFullName() + " at " + sessionTime + "\n");
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(frame, "Session not found.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid member ID.");
+        }
+    }
+    
 
 
 }
