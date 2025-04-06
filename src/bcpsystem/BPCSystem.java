@@ -183,6 +183,56 @@ public class BPCSystem {
         }
     }
     
+     private void cancelSession() {
+    String memberIdStr = JOptionPane.showInputDialog(frame, "Enter Member ID:");
+    if (memberIdStr == null) return;
+    try {
+        int memberId = Integer.parseInt(memberIdStr);
+        Member member = locateMemberById(memberId);
+        if (member == null) {
+            JOptionPane.showMessageDialog(frame, "Member not found.");
+            return;
+        }
+
+        if (member.getReservedSessions().isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No sessions reserved for this member.");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder("Your Reserved Sessions:\n");
+        for (TherapySession session : member.getReservedSessions()) {
+            sb.append(session.getSessionTime()).append(" - Status:" + 
+                    (session.isCompleted() ? "Completed":"Reserved") +"\n");
+        }
+        String sessionTime = JOptionPane.showInputDialog(frame, sb.toString() + "\nEnter Session Time to Cancel:");
+        if (sessionTime == null) return;
+
+        Iterator<TherapySession> iterator = member.getReservedSessions().iterator();
+        while (iterator.hasNext()) {
+            TherapySession session = iterator.next();
+            if (session.getSessionTime().equalsIgnoreCase(sessionTime)) {
+                if (session.isCompleted()) {
+                    JOptionPane.showMessageDialog(frame, "Cannot Cancel A completed session.");
+                    return;
+                }
+                
+                if (session.getMember() != member) {
+                    JOptionPane.showMessageDialog(frame, "You can Only Cancel Your session");
+                    return;
+                }
+                session.releaseReservation();
+                iterator.remove();
+                JOptionPane.showMessageDialog(frame, "Session canceled.");
+                outputArea.append("Session canceled for " + member.getFullName() + " at " + sessionTime + "\n");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(frame, "Session not found.");
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(frame, "Invalid member ID.");
+    }
+}
+    
 
 
 }
