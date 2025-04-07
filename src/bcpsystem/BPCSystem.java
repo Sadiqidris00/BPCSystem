@@ -232,7 +232,25 @@ public class BPCSystem {
         JOptionPane.showMessageDialog(frame, "Invalid member ID.");
     }
 }
-    
+    // Search for Soecialist
+    private void findByFocusArea() {
+    String focusArea = JOptionPane.showInputDialog(frame, "Enter focus area to search:");
+    if (focusArea == null) return;
+    focusArea = focusArea.toLowerCase();
+
+    outputArea.append("\n--- Specialists with Focus in " + focusArea + " ---\n");
+    boolean found = false;
+    for (Specialist s : specialists) {
+        if (s.getFocusArea().toLowerCase().contains(focusArea)) {
+            outputArea.append("- " + s.getSpecialistName() + " (" + s.getFocusArea() + ")\n");
+            found = true;
+        }
+    }
+    if (!found) {
+        outputArea.append("No specialists found.\n");
+    }
+}
+
 
 
 }
