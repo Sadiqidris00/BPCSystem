@@ -250,6 +250,49 @@ public class BPCSystem {
         outputArea.append("No specialists found.\n");
     }
 }
+    // Display all session
+    public void showAllSessions() {
+        outputArea.append("\n--- All Sessions ---\n");
+        for (Specialist s : specialists) {
+            outputArea.append("Specialist: " + s.getSpecialistName() + "\n");
+            for (TherapySession session : s.getSessionList()) {
+                outputArea.append("  - " + session.toString() + "\n");
+            }
+        }
+    }
+    
+    
+    // Search by ID
+    public Member locateMemberById(int id) {
+        for (Member m : members) {
+            if (m.getMemberId() == id) return m;
+        }
+        return null;
+    }
+
+    // Check specialist by name
+    public Specialist locateSpecialistByName(String name) {
+        for (Specialist s : specialists) {
+            if (s.getSpecialistName().equalsIgnoreCase(name)) return s;
+        }
+        return null;
+    }
+    
+    public List<Specialist> getSpecialists() {
+    return specialists;
+}
+
+    public List<Member> getMembers() {
+    return members;
+}
+
+    // Display GUI
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            BPCSystem system = new BPCSystem();
+            system.showGUI();
+        });
+    }
 
 
 
